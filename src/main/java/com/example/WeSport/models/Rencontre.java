@@ -1,18 +1,25 @@
 package com.example.WeSport.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "rencontre")
 public class Rencontre {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -28,34 +35,16 @@ public class Rencontre {
 
     private String description;
 
-
-
-
-    public Long getId() {
-        return id;
+    @Override
+    public String toString() {
+        return "Rencontre{" +
+                "id=" + id +
+                ", sport=" + sport +
+                ", nombre_joueur=" + nombre_joueur +
+                ", createdAt=" + createdAt +
+                ", plannedAt=" + plannedAt +
+                ", description='" + description + '\'' +
+              //  ", id_owner=" + id_owner +
+                '}';
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ERencontre getSport() {
-        return sport;
-    }
-
-    public void setSport(ERencontre sport) {
-        this.sport = sport;
-    }
-
-    public int getNombre_joueur() {
-        return nombre_joueur;
-    }
-
-    public void setNombre_joueur(int nombre_joueur) {
-        this.nombre_joueur = nombre_joueur;
-    }
-
-
-
-
 }

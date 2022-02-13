@@ -54,9 +54,10 @@ public class TestController {
     }
 
     @PostMapping("/createRencontre")
-    @PreAuthorize("hasRole('MODERATOR')")
+    @PreAuthorize("hasRole('USER')")
     public String createRencontre(@Valid @RequestBody Rencontre rencontre) {
 
+        System.out.println("ici "+rencontre.toString());
         rencontreRepository.save(rencontre);
         return "Well added";
 
@@ -104,9 +105,10 @@ public class TestController {
         return ResponseEntity.ok(rencontre);
     }
 
+
     // PARTICIPATION REQUEST
 
-
+/*
     @GetMapping (value = "/getParticipationByIdUser/{id}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> findParticipationByUser_id(@PathVariable Long id) {
@@ -114,8 +116,8 @@ public class TestController {
 
         Optional<Participation> participation = participationRepository.findParticipationByUser_id(id);
         return ResponseEntity.ok(participation);
-    }
-
+    }*/
+/*
     @GetMapping (value = "/getParticipationByIdRencontre/{id}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> findParticipationByRencontre_id(@PathVariable Long id) {
@@ -123,7 +125,7 @@ public class TestController {
 
         Optional<Participation> participation = participationRepository.findParticipationByRencontre_id(id);
         return ResponseEntity.ok(participation);
-    }
+    }*/
 
     @GetMapping (value = "/getParticipationByIdParticipation/{id}")
     @PreAuthorize("hasRole('USER')")

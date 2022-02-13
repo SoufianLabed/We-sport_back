@@ -1,7 +1,14 @@
 package com.example.WeSport.models;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -10,6 +17,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(	name = "users",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "username"),
@@ -39,31 +50,9 @@ public class User {
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+
+
     private Set<Role> roles = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(name = "participation",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "rencontre_id"))
-    Set<Rencontre> rencontre_id ;
-
-
-
-    @ManyToMany
-    @JoinTable(name = "avis",
-            joinColumns = @JoinColumn(name = "joueur_id"),
-            inverseJoinColumns = @JoinColumn(name = "owner_id"))
-
-    Set<User> joueur_id ;
-
-    @ManyToOne
-    @JoinTable(name = "rencontre",
-            joinColumns = @JoinColumn(name = "id_owner"))
-    private User user;
-
-
-    public User() {
-    }
 
     public User(String username, String email, String password, String description) {
         this.username = username;
@@ -125,13 +114,13 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
+/*
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
+    }*/
 }
 

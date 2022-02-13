@@ -12,11 +12,11 @@ public interface ParticipationRepository extends JpaRepository<Participation, Lo
 
 
        //Optional<Participation> findParticipationByUser_id(Long id);
-       @Query("FROM Participation g where g.user_id = :user_id")
-       Optional <Participation> findParticipationByUser_id(@Param("user_id") Long userId);
+      /* @Query("FROM Participation g where g.user_id = :user_id")
+       Optional <Participation> findParticipationByUser_id(@Param("user_id") Long userId);*/
 
-       @Query("FROM Participation g where g.rencontre_id = :rencontre_id")
-       Optional <Participation> findParticipationByRencontre_id(@Param("rencontre_id") Long rencontreId);
+      // @Query("FROM Participation g where g.rencontre_id = :rencontre_id")
+      // Optional <Participation> findParticipationByRencontre_id(@Param("rencontre_id") Long rencontreId);
 
        Optional<Participation> findParticipationById(Long id);
 
