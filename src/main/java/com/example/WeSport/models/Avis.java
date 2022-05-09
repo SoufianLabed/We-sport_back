@@ -13,14 +13,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "avis")
 public class Avis {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Integer id;
 
     private String description;
 
     private int note_joueur;
+
+    private Long id_joueur;
+
+    private Long id_creator;
 
 
 }

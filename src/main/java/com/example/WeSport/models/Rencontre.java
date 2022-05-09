@@ -35,6 +35,12 @@ public class Rencontre {
 
     private String description;
 
+    private Long owner;
+
+    private String city;
+
+    private String postalCode;
+
     @Override
     public String toString() {
         return "Rencontre{" +
@@ -44,7 +50,9 @@ public class Rencontre {
                 ", createdAt=" + createdAt +
                 ", plannedAt=" + plannedAt +
                 ", description='" + description + '\'' +
-              //  ", id_owner=" + id_owner +
+                ", owner=" + owner +
+                ", city='" + city + '\'' +
+                ", postalCode='" + postalCode + '\'' +
                 '}';
     }
 }
