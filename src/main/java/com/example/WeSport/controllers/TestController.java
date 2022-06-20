@@ -93,7 +93,7 @@ public class TestController {
         return ResponseEntity.ok(new MessageResponse("Avis registered successfully!"));
     }
 
-    @GetMapping("/getAllRencontre")
+    @GetMapping("/meeting")
     //@PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getAllRencontre() {
         List rencontres = rencontreRepository.findAll();

@@ -58,7 +58,9 @@ CREATE TABLE public.rencontre
     planned_at timestamp without time zone,
     sport character varying(20),
     city character varying(255),
-    postal_code character varying(255) COLLATE pg_catalog."default",
+    postal_code character varying(255),
+    latitude character varying(255),
+    longitude character varying(255),
     CONSTRAINT rencontre_pkey PRIMARY KEY (id)
 );
 

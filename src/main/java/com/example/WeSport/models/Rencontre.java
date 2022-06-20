@@ -41,6 +41,10 @@ public class Rencontre {
 
     private String postalCode;
 
+    private String latitude;
+
+    private String longitude;
+
     @Override
     public String toString() {
         return "Rencontre{" +
