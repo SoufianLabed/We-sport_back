@@ -11,6 +11,9 @@ import com.example.WeSport.repository.AvisRepository;
 import com.example.WeSport.repository.ParticipationRepository;
 import com.example.WeSport.repository.RencontreRepository;
 import com.example.WeSport.repository.UserRepository;
+import com.example.WeSport.services.AvisService;
+import com.example.WeSport.services.ParticipationService;
+import com.example.WeSport.services.RencontreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,136 +39,66 @@ public class TestController {
     @Autowired
     AvisRepository avisRepository;
 
-    @GetMapping("/all")
-    public String allAccess() {
-        return "Public Content.";
-    }
+    @Autowired
+    RencontreService rencontreService;
 
-    @GetMapping("/user")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public String userAccess() {
-        return "User Content.";
-    }
+    @Autowired
+    ParticipationService participationService;
 
-    @GetMapping("/mod")
-    @PreAuthorize("hasRole('MODERATOR')")
-    public String moderatorAccess() {
-        return "Moderator Board.";
-    }
-
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String adminAccess() {
-        return "Admin Board.";
-    }
+    @Autowired
+    AvisService avisService;
 
     @PostMapping("/createRencontre")
-    //@PreAuthorize("hasRole('USER')")
-    public ResponseEntity createRencontre(@Valid @RequestBody Rencontre rencontre) {
-
-        System.out.println("ici "+rencontre.toString());
-        rencontreRepository.save(rencontre);
-        Participation participation = Participation.builder()
-                .rencontreId(rencontre.getId())
-                .playerId(rencontre.getOwner())
-                .build();
-
-        participationRepository.save(participation);
-        return ResponseEntity.ok(new MessageResponse("Meeting registered successfully!"));
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> createRencontre(@Valid @RequestBody Rencontre rencontre) {
+        return ResponseEntity.ok(rencontreService.createRencontre(rencontre));
     }
 
-    @PostMapping("/createParticipation")
-    //@PreAuthorize("hasRole('USER')")
-    public ResponseEntity createParticipation(@Valid @RequestBody Participation participation) {
-
-        System.out.println("participation : "+participation.toString());
-        participationRepository.save(participation);
-
-        return ResponseEntity.ok(new MessageResponse("Participation registered successfully!"));
+    @PostMapping("/participation")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> createParticipation(@Valid @RequestBody Participation participation) {
+        return ResponseEntity.ok(participationService.createParticipation(participation));
     }
 
-    @PostMapping("/createAvis")
-    //@PreAuthorize("hasRole('USER')")
+    @PostMapping("/avis")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> createAvis(@Valid @RequestBody Avis avis) {
-        avisRepository.save(avis);
-        System.out.println("Avis : "+avis.toString());
-
-        return ResponseEntity.ok(new MessageResponse("Avis registered successfully!"));
+        return ResponseEntity.ok(avisService.createAvis(avis));
     }
 
     @GetMapping("/meeting")
-    //@PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getAllRencontre() {
-        List rencontres = rencontreRepository.findAll();
-        return ResponseEntity.ok(rencontres);
+        return ResponseEntity.ok(rencontreService.getAllRencontre());
     }
 
-    // RENCONTRE REQUEST
-    @GetMapping (value = "/getRencontreBySport/{sport}")
-    //@PreAuthorize("hasRole('MODERATOR')")
+    @GetMapping (value = "/rencontre/sport/{sport}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getRencontreBySport(@PathVariable String sport) {
-        System.out.println(sport);
-
-        List<Rencontre> rencontre;
-
-        switch (sport.toLowerCase()) {
-            case "football":
-                rencontre = rencontreRepository.findRencontreBySport(ERencontre.FOOTBALL);
-                break;
-
-            case "rugby":
-                rencontre = rencontreRepository.findRencontreBySport(ERencontre.RUGBY);
-                break;
-
-            default:
-                rencontre = rencontreRepository.findRencontreBySport(ERencontre.FOOTBALL);
-        }
-
-        return ResponseEntity.ok(rencontre);
-
+        return ResponseEntity.ok(rencontreService.getRencontreBySport(sport));
     }
 
-    @GetMapping (value = "/getRencontreById/{id}")
-    //@PreAuthorize("hasRole('MODERATOR')")
+    @GetMapping (value = "/rencontre/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getRencontreById(@PathVariable Long id) {
-        System.out.println(id);
-
-        Optional<Rencontre> rencontre = rencontreRepository.findRencontreById(id);
-        return ResponseEntity.ok(rencontre);
+        return ResponseEntity.ok(rencontreService.getRencontreById(id));
     }
 
-
-    @GetMapping (value = "/getRencontreByIdUser/{id}")
-    //@PreAuthorize("hasRole('USER')")
+    @GetMapping (value = "/rencontre/user/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getRencontreByIdCreator(@PathVariable Long id) {
-        System.out.println(id);
-
-        List<Rencontre> rencontre = rencontreRepository.findRencontresByOwner(id);
-        return ResponseEntity.ok(rencontre);
+        return ResponseEntity.ok(rencontreService.getRencontreByIdCreator(id));
     }
 
-    // PARTICIPATION REQUEST
-
-
-    @GetMapping (value = "/getParticipationByIdUser/{id}")
-    //@PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> findParticipationByUser_id(@PathVariable Long id) {
-        System.out.println(id);
-
-        List<Participation> participation = participationRepository.findParticipationsByPlayerId(id);
-        return ResponseEntity.ok(participation);
+    @GetMapping (value = "/participation/user/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> findParticipationByUserId(@PathVariable Long id) {
+        return ResponseEntity.ok(participationService.findParticipationByUserId(id));
     }
 
-
-    @GetMapping (value = "/getParticipationByIdRencontre/{id}")
-    //@PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> findParticipationByRencontre_id(@PathVariable Long id) {
-        System.out.println(id);
-
-        List<Participation> participation = participationRepository.findParticipationsByRencontreId(id);
-        return ResponseEntity.ok(participation);
+    @GetMapping (value = "/participation/rencontre/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> findParticipationByRencontreId(@PathVariable Long id) {
+        return ResponseEntity.ok(participationService.findParticipationByRencontreId(id));
     }
-
-
-
 }
