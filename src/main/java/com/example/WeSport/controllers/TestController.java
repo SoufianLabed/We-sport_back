@@ -4,26 +4,19 @@ package com.example.WeSport.controllers;
 import com.example.WeSport.models.Avis;
 import com.example.WeSport.models.Participation;
 import com.example.WeSport.models.Rencontre;
-import com.example.WeSport.payload.request.SignupRequest;
-import com.example.WeSport.payload.response.JwtResponse;
-import com.example.WeSport.payload.response.MessageResponse;
 import com.example.WeSport.repository.AvisRepository;
 import com.example.WeSport.repository.ParticipationRepository;
 import com.example.WeSport.repository.RencontreRepository;
-import com.example.WeSport.repository.UserRepository;
 import com.example.WeSport.services.AvisService;
 import com.example.WeSport.services.ParticipationService;
 import com.example.WeSport.services.RencontreService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import com.example.WeSport.models.ERencontre;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

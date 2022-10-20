@@ -3,6 +3,7 @@ package com.example.WeSport.services;
 import com.example.WeSport.models.Participation;
 import com.example.WeSport.payload.response.MessageResponse;
 import com.example.WeSport.repository.ParticipationRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ParticipationService {
     @Autowired
     ParticipationRepository participationRepository;
